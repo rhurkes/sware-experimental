@@ -39,7 +39,7 @@ def parse_coords(line_pair):
     lon = line_pair[4:]
     lon = f'1{lon}' if lon[0] == '0' else lon
     lon = float(lon) / -100
-    return (lat, lon)
+    return (lon, lat)
 
 def get_tornado_risks(date, hour):
     if not date:

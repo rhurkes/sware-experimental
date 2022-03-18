@@ -1,0 +1,173 @@
+1:Maximum/Composite radar reflectivity:dB (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+2:3:3 (instant):lambert:cloudTop:level 0:fcst time 10 hrs:from 202203051200
+3:201:201 (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+4:Vertically-integrated liquid:kg m**-1 (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+5:Visibility:m (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+6:Derived radar reflectivity:dB (instant):lambert:heightAboveGround:level 1000 m:fcst time 10 hrs:from 202203051200
+7:Derived radar reflectivity:dB (instant):lambert:heightAboveGround:level 4000 m:fcst time 10 hrs:from 202203051200
+8:Derived radar reflectivity:dB (instant):lambert:isothermal:level 263 K:fcst time 10 hrs:from 202203051200
+9:Wind speed (gust):m s**-1 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+10:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 25000 Pa:fcst time 10 hrs:from 202203051200
+11:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 25000 Pa:fcst time 10 hrs:from 202203051200
+12:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 30000 Pa:fcst time 10 hrs:from 202203051200
+13:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 30000 Pa:fcst time 10 hrs:from 202203051200
+14:Geopotential Height:gpm (instant):lambert:isobaricInhPa:level 50000 Pa:fcst time 10 hrs:from 202203051200
+15:Temperature:K (instant):lambert:isobaricInhPa:level 50000 Pa:fcst time 10 hrs:from 202203051200
+16:Dew point temperature:K (instant):lambert:isobaricInhPa:level 50000 Pa:fcst time 10 hrs:from 202203051200
+17:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 50000 Pa:fcst time 10 hrs:from 202203051200
+18:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 50000 Pa:fcst time 10 hrs:from 202203051200
+19:Geopotential Height:gpm (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+20:Temperature:K (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+21:Dew point temperature:K (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+22:Geometric vertical velocity:m s**-1 (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+23:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+24:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 70000 Pa:fcst time 10 hrs:from 202203051200
+25:Geopotential Height:gpm (instant):lambert:isobaricInhPa:level 85000 Pa:fcst time 10 hrs:from 202203051200
+26:Temperature:K (instant):lambert:isobaricInhPa:level 85000 Pa:fcst time 10 hrs:from 202203051200
+27:Dew point temperature:K (instant):lambert:isobaricInhPa:level 85000 Pa:fcst time 10 hrs:from 202203051200
+28:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 85000 Pa:fcst time 10 hrs:from 202203051200
+29:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 85000 Pa:fcst time 10 hrs:from 202203051200
+30:Temperature:K (instant):lambert:isobaricInhPa:level 92500 Pa:fcst time 10 hrs:from 202203051200
+31:Dew point temperature:K (instant):lambert:isobaricInhPa:level 92500 Pa:fcst time 10 hrs:from 202203051200
+32:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 92500 Pa:fcst time 10 hrs:from 202203051200
+33:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 92500 Pa:fcst time 10 hrs:from 202203051200
+34:Temperature:K (instant):lambert:isobaricInhPa:level 100000 Pa:fcst time 10 hrs:from 202203051200
+35:Dew point temperature:K (instant):lambert:isobaricInhPa:level 100000 Pa:fcst time 10 hrs:from 202203051200
+36:U component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 100000 Pa:fcst time 10 hrs:from 202203051200
+37:V component of wind:m s**-1 (instant):lambert:isobaricInhPa:level 100000 Pa:fcst time 10 hrs:from 202203051200
+38:220:220 (max):lambert:pressureFromGroundLayer:levels 10000-100000 Pa:fcst time 9-10 hrs (max):from 202203051200
+39:221:221 (max):lambert:pressureFromGroundLayer:levels 10000-100000 Pa:fcst time 9-10 hrs (max):from 202203051200
+40:Geometric vertical velocity:m s**-1 (avg):lambert:sigmaLayer:levels 0.5-0.8 sigma value:fcst time 9-10 hrs (avg):from 202203051200
+41:MSLP (MAPS System Reduction):Pa (instant):lambert:meanSea:level 0:fcst time 10 hrs:from 202203051200
+42:Geopotential Height:gpm (instant):lambert:isobaricInhPa:level 100000 Pa:fcst time 10 hrs:from 202203051200
+43:198:198 (max):lambert:heightAboveGround:level 1000 m:fcst time 9-10 hrs (max):from 202203051200
+44:Derived radar reflectivity:dB (max):lambert:isothermal:level 263 K:fcst time 9-10 hrs (max):from 202203051200
+45:199:199 (max):lambert:heightAboveGroundLayer:levels 5000-2000 m:fcst time 9-10 hrs (max):from 202203051200
+46:200:200 (min):lambert:heightAboveGroundLayer:levels 5000-2000 m:fcst time 9-10 hrs (min):from 202203051200
+47:199:199 (max):lambert:heightAboveGroundLayer:levels 2000-0 m:fcst time 9-10 hrs (max):from 202203051200
+48:200:200 (min):lambert:heightAboveGroundLayer:levels 2000-0 m:fcst time 9-10 hrs (min):from 202203051200
+49:199:199 (max):lambert:heightAboveGroundLayer:levels 3000-0 m:fcst time 9-10 hrs (max):from 202203051200
+50:200:200 (min):lambert:heightAboveGroundLayer:levels 3000-0 m:fcst time 9-10 hrs (min):from 202203051200
+51:Vorticity (relative):s**-1 (max):lambert:heightAboveGroundLayer:levels 2000-0 m:fcst time 9-10 hrs (max):from 202203051200
+52:Vorticity (relative):s**-1 (max):lambert:heightAboveGroundLayer:levels 1000-0 m:fcst time 9-10 hrs (max):from 202203051200
+53:Hail:m (max):lambert:atmosphere:level 0 -:fcst time 9-10 hrs (max):from 202203051200
+54:Hail:m (max):lambert:sigma:level 0.1 sigma value:fcst time 9-10 hrs (max):from 202203051200
+55:Hail:m (max):lambert:surface:level 0:fcst time 9-10 hrs (max):from 202203051200
+56:74:74 (max):lambert:atmosphereSingleLayer:level 0 considered as a single layer:fcst time 9-10 hrs (max):from 202203051200
+57:1:1 (instant):lambert:heightAboveGround:level 1 m:fcst time 10 hrs:from 202203051200
+58:1:1 (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+59:Lightning:dimensionless (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+60:U component of wind:m s**-1 (instant):lambert:heightAboveGround:level 80 m:fcst time 10 hrs:from 202203051200
+61:V component of wind:m s**-1 (instant):lambert:heightAboveGround:level 80 m:fcst time 10 hrs:from 202203051200
+62:Surface pressure:Pa (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+63:Orography:m (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+64:Temperature:K (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+65:Total snowfall:m (accum):lambert:surface:level 0:fcst time 0-10 hrs (accum):from 202203051200
+66:Moisture availability:% (instant):lambert:depthBelowLand:level 0 m:fcst time 10 hrs:from 202203051200
+67:Plant canopy surface water:kg m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+68:Water equivalent of accumulated snow depth (deprecated):kg m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+69:Snow cover:% (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+70:Snow depth:m (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+71:2 metre temperature:K (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+72:Potential temperature:K (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+73:2 metre specific humidity:kg kg**-1 (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+74:2 metre dewpoint temperature:K (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+75:2 metre relative humidity:% (instant):lambert:heightAboveGround:level 2 m:fcst time 10 hrs:from 202203051200
+76:Mass density:concentration (instant):lambert:heightAboveGround:level 8 m:fcst time 10 hrs:from 202203051200
+77:10 metre U wind component:m s**-1 (instant):lambert:heightAboveGround:level 10 m:fcst time 10 hrs:from 202203051200
+78:10 metre V wind component:m s**-1 (instant):lambert:heightAboveGround:level 10 m:fcst time 10 hrs:from 202203051200
+79:10 metre wind speed:m s**-1 (max):lambert:heightAboveGround:level 10 m:fcst time 9-10 hrs (max):from 202203051200
+80:222:222 (max):lambert:heightAboveGround:level 10 m:fcst time 9-10 hrs (max):from 202203051200
+81:223:223 (max):lambert:heightAboveGround:level 10 m:fcst time 9-10 hrs (max):from 202203051200
+82:Percent frozen precipitation:% (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+83:Precipitation rate:kg m**-2 s**-1 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+84:Total Precipitation:kg m**-2 (accum):lambert:surface:level 0:fcst time 0-10 hrs (accum):from 202203051200
+85:Water equivalent of accumulated snow depth (deprecated):kg m**-2 (accum):lambert:surface:level 0:fcst time 0-10 hrs (accum):from 202203051200
+86:227:227 (accum):lambert:surface:level 0:fcst time 0-10 hrs (accum):from 202203051200
+87:Freezing Rain:kg m**-2 (accum):lambert:surface:level 0:fcst time 0-10 hrs (accum):from 202203051200
+88:Storm surface runoff:kg m**-2 (accum):lambert:surface:level 0:fcst time 9-10 hrs (accum):from 202203051200
+89:Baseflow-groundwater runoff:kg m**-2 (accum):lambert:surface:level 0:fcst time 9-10 hrs (accum):from 202203051200
+90:Total Precipitation:kg m**-2 (accum):lambert:surface:level 0:fcst time 9-10 hrs (accum):from 202203051200
+91:Water equivalent of accumulated snow depth (deprecated):kg m**-2 (accum):lambert:surface:level 0:fcst time 9-10 hrs (accum):from 202203051200
+92:227:227 (accum):lambert:surface:level 0:fcst time 9-10 hrs (accum):from 202203051200
+93:Categorical snow:(Code table 4.222) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+94:Categorical ice pellets:(Code table 4.222) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+95:Categorical freezing rain:(Code table 4.222) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+96:Categorical rain:(Code table 4.222) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+97:Surface roughness:m (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+98:Frictional velocity:m s**-1 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+99:Sensible heat net flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+100:Latent heat net flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+101:Vegetation:% (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+102:231:231 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+103:232:232 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+104:Leaf Area Index:~ (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+105:Ground heat flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+106:Vegetation Type:Integer(0-13) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+107:Surface lifted index:K (instant):lambert:isobaricLayer:levels 50000-100000 Pa:fcst time 10 hrs:from 202203051200
+108:Convective available potential energy:J kg**-1 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+109:Convective inhibition:J kg**-1 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+110:Precipitable water:kg m**-2 (instant):lambert:atmosphereSingleLayer:level 0 considered as a single layer:fcst time 10 hrs:from 202203051200
+111:102:102 (instant):lambert:atmosphereSingleLayer:level 0 considered as a single layer:fcst time 10 hrs:from 202203051200
+112:Total column:integrated mass density (instant):lambert:atmosphereSingleLayer:level 0 considered as a single layer:fcst time 10 hrs:from 202203051200
+113:Total column-integrated cloud water:kg m**-2 (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+114:Total column-integrated cloud ice:kg m**-2 (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+115:Total Cloud Cover:% (instant):lambert:boundaryLayerCloudLayer:level 0:fcst time 10 hrs:from 202203051200
+116:Low cloud cover:% (instant):lambert:lowCloudLayer:level 0:fcst time 10 hrs:from 202203051200
+117:Medium cloud cover:% (instant):lambert:middleCloudLayer:level 0:fcst time 10 hrs:from 202203051200
+118:High cloud cover:% (instant):lambert:highCloudLayer:level 0:fcst time 10 hrs:from 202203051200
+119:Total Cloud Cover:% (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+120:Geopotential Height:gpm (instant):lambert:cloudCeiling:level 0:fcst time 10 hrs:from 202203051200
+121:Geopotential Height:gpm (instant):lambert:cloudBase:level 0:fcst time 10 hrs:from 202203051200
+122:Pressure:Pa (instant):lambert:cloudBase:level 0:fcst time 10 hrs:from 202203051200
+123:Pressure:Pa (instant):lambert:cloudTop:level 0:fcst time 10 hrs:from 202203051200
+124:Geopotential Height:gpm (instant):lambert:cloudTop:level 0:fcst time 10 hrs:from 202203051200
+125:Upward long-wave radiation flux:W m**-2 (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
+126:Downward short-wave radiation flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+127:Downward long-wave radiation flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+128:Upward short-wave radiation flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+129:Upward long-wave radiation flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+130:Cloud Forcing Net Solar Flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+131:Visible Beam Downward Solar Flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+132:Visible Diffuse Downward Solar Flux:W m**-2 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+133:Upward short-wave radiation flux:W m**-2 (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
+134:Storm relative helicity:J kg**-1 (instant):lambert:heightAboveGroundLayer:levels 3000-0 m:fcst time 10 hrs:from 202203051200
+135:Storm relative helicity:J kg**-1 (instant):lambert:heightAboveGroundLayer:levels 1000-0 m:fcst time 10 hrs:from 202203051200
+136:U-component storm motion:m s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-6000 m:fcst time 10 hrs:from 202203051200
+137:V-component storm motion:m s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-6000 m:fcst time 10 hrs:from 202203051200
+138:Vertical u-component shear:s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-1000 m:fcst time 10 hrs:from 202203051200
+139:Vertical v-component shear:s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-1000 m:fcst time 10 hrs:from 202203051200
+140:Vertical u-component shear:s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-6000 m:fcst time 10 hrs:from 202203051200
+141:Vertical v-component shear:s**-1 (instant):lambert:heightAboveGroundLayer:levels 0-6000 m:fcst time 10 hrs:from 202203051200
+142:Geopotential Height:gpm (instant):lambert:isothermZero:level 0:fcst time 10 hrs:from 202203051200
+143:Relative humidity:% (instant):lambert:isothermZero:level 0:fcst time 10 hrs:from 202203051200
+144:Pressure:Pa (instant):lambert:isothermZero:level 0:fcst time 10 hrs:from 202203051200
+145:Geopotential Height:gpm (instant):lambert:highestTroposphericFreezing:level 0:fcst time 10 hrs:from 202203051200
+146:Relative humidity:% (instant):lambert:highestTroposphericFreezing:level 0:fcst time 10 hrs:from 202203051200
+147:Pressure:Pa (instant):lambert:highestTroposphericFreezing:level 0:fcst time 10 hrs:from 202203051200
+148:Geopotential Height:gpm (instant):lambert:isothermal:level 263 K:fcst time 10 hrs:from 202203051200
+149:Geopotential Height:gpm (instant):lambert:isothermal:level 253 K:fcst time 10 hrs:from 202203051200
+150:Best (4-layer) lifted index:K (instant):lambert:pressureFromGroundLayer:levels 18000-0 Pa:fcst time 10 hrs:from 202203051200
+151:Convective available potential energy:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 18000-0 Pa:fcst time 10 hrs:from 202203051200
+152:Convective inhibition:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 18000-0 Pa:fcst time 10 hrs:from 202203051200
+153:Planetary boundary layer height:m (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+154:Geopotential Height:gpm (instant):lambert:adiabaticCondensation:level 0:fcst time 10 hrs:from 202203051200
+155:Convective available potential energy:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 9000-0 Pa:fcst time 10 hrs:from 202203051200
+156:Convective inhibition:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 9000-0 Pa:fcst time 10 hrs:from 202203051200
+157:Convective available potential energy:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 25500-0 Pa:fcst time 10 hrs:from 202203051200
+158:Convective inhibition:J kg**-1 (instant):lambert:pressureFromGroundLayer:levels 25500-0 Pa:fcst time 10 hrs:from 202203051200
+159:Geopotential Height:gpm (instant):lambert:equilibrium:level 0:fcst time 10 hrs:from 202203051200
+160:Pressure of level from which parcel was lifted:Pa (instant):lambert:pressureFromGroundLayer:levels 25500-0 Pa:fcst time 10 hrs:from 202203051200
+161:Convective available potential energy:J kg**-1 (instant):lambert:heightAboveGroundLayer:levels 0-3000 m:fcst time 10 hrs:from 202203051200
+162:Geopotential Height:gpm (instant):lambert:unknown:level 0 LFC:fcst time 10 hrs:from 202203051200
+163:204:204 (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+164:206:206 (instant):lambert:heightAboveGroundLayer:levels 0-500 m:fcst time 10 hrs:from 202203051200
+165:Layer Thickness:m (instant):lambert:unknown:levels 261-256 K:fcst time 10 hrs:from 202203051200
+166:205:205 (instant):lambert:heightAboveGroundLayer:levels 0-3000 m:fcst time 10 hrs:from 202203051200
+167:242:242 (instant):lambert:atmosphere:level 0 -:fcst time 10 hrs:from 202203051200
+168:Land-sea mask:(0 - 1) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+169:Sea ice area fraction:(0 - 1) (instant):lambert:surface:level 0:fcst time 10 hrs:from 202203051200
+170:Simulated Brightness Temperature for GOES 12, Channel 3:K (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
+171:Simulated Brightness Temperature for GOES 12, Channel 4:K (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
+172:Simulated Brightness Temperature for GOES 11, Channel 3:K (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
+173:Simulated Brightness Temperature for GOES 11, Channel 4:K (instant):lambert:nominalTop:level 0:fcst time 10 hrs:from 202203051200
