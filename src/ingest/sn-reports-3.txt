@@ -1,0 +1,22 @@
+Refresh: 1
+Threshold: 999
+Title: Spotter Network (96dpi) - Reports Only
+Font: 1, 11, 0, "Courier New"
+IconFile: 3, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+IconFile: 4, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+IconFile: 5, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+
+Icon: 34.776539,-96.663200,000,3,7,"Reported By: Matthew Ellis\nFlash Flood\nTime: 2022-03-21 23:12:50 UTC\nNotes: running water in most area of ada,ok about 4 to 5 inches of water on the roads."
+Icon: 30.825684,-97.581139,000,3,1,"Reported By: Randy Denzer\nTornado\nTime: 2022-03-21 23:10:29 UTC\nNotes: 2 miles to my north. cone tornado"
+Icon: 30.461355,-97.598610,000,3,1,"Reported By: Adam Benner\nTornado\nTime: 2022-03-21 23:05:53 UTC\nNotes: Large tornado on the ground."
+Icon: 30.461355,-97.598610,000,3,1,"Reported By: Adam Benner\nTornado\nTime: 2022-03-21 23:05:52 UTC\nNotes: Large tornado on the ground."
+Icon: 30.543200,-97.544701,000,3,1,"Reported By: Jeff Piotrowski\nTornado\nTime: 2022-03-21 23:04:05 UTC\nNotes: Tornado west of my location"
+Icon: 33.645641,-97.155129,000,3,8,"Reported By: Jim Ladue\nOther - See Note\nTime: 2022-03-21 22:54:19 UTC\nNotes: Overturned semi located on I35 and rt 82. Some debris on the highway."
+Icon: 33.059162,-99.626869,000,3,8,"Reported By: Mike Sawyers\nOther - See Note\nTime: 2022-03-21 22:27:18 UTC\nNotes: Multiple structures with roofs gone and trailers flipped over.  One person rescued from inside of travel trailer..    a definite 100 yard path of damage occurred at Approximately 2:20 pm"
+Icon: 33.365112,-97.404114,000,4,3,"Reported By: Michael Payne\nRotating Wall Cloud\nTime: 2022-03-21 22:04:35 UTC\nNotes: Rapidly rotating wall cloud 5 miles to my SW."
+Icon: 35.942299,-95.197601,000,4,7,"Reported By: Samuel Mclemore\nFlash Flood\nTime: 2022-03-21 21:57:41 UTC\nNotes: Flash Flooding is ongoing near Hulbert water was moving rapidly with some small debris on the ground mostly little tree branches covering some back residential roads. More Heavy rain still falling."
+Icon: 35.942299,-95.197601,000,4,7,"Reported By: Samuel Mclemore\nFlash Flood\nTime: 2022-03-21 21:57:27 UTC\nNotes: Flash Flooding is ongoing near Hulbert water was moving rapidly with some small debris on the ground mostly little tree branches covering some back residential roads. More Heavy rain still falling."
+Icon: 33.539642,-97.827530,000,4,1,"Reported By: Michael Beard\nTornado\nTime: 2022-03-21 21:42:11 UTC\nNotes: large tornado crossing 287 headed for bowie"
+Icon: 33.533783,-97.821907,000,4,1,"Reported By: Jason Myers\nTornado\nTime: 2022-03-21 21:40:58 UTC\nNotes: House damaged at this location. Saw it cross US287"
+Icon: 33.339001,-98.053101,000,4,8,"Reported By: Harrison Bretz\nOther - See Note\nTime: 2022-03-21 21:19:31 UTC\nNotes: Downed tree 4 miles northeast of Jacksboro, about two minutes after tornadic circulation passed over location."
+Icon: 34.790199,-96.659477,000,5,6,"Reported By: Matthew Ellis\nFlooding\nTime: 2022-03-21 21:10:38 UTC\nNotes: there's about 3 to 4 inches of water on the some of the parking lot in ada,ok. been raining most of the day. so so .65 inches of rain."

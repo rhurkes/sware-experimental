@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            html, body, ol, li {
+                margin: 0;
+                padding: 0;
+            }
+            html, body {
+                height: 100%;
+                color: rgb(225, 225, 225);
+                font-size: 18px;
+                font-family: monospace;
+            }
+            body {
+                display: flex;
+                flex-flow: column;
+                height: 100%;
+                background-color: rgb(23, 23, 23);
+            }
+            #intro {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                background-color: rgb(23, 23, 23);
+                z-index: 1;
+                text-align: center;
+                padding: 96px;
+                font-size: 48px;
+                cursor: pointer;
+            }
+            #config {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                background-color: rgb(23, 23, 23);
+                z-index: 1;
+                display: none;
+            }
+            #content {
+                margin-bottom: 48px;
+                flex: 1 1 auto;
+                overflow-y: scroll;
+                flex-direction: column-reverse;
+                display: flex;
+            }
+            #content > li {
+                border-top: 1px solid rgb(49, 49, 49);
+                display: flex;
+                padding: 8px 16px;
+            }
+            li.pds, li.emergency, li.high {
+                background-color: rgb(251, 0, 255);
+            }
+            li.tor, li.mod {
+                background-color: rgb(252, 0, 6);
+            }
+            li.svr {
+                background-color: rgb(32, 117, 255);
+            }
+            li.enh display {
+                color: rgb(253, 145, 32);
+            }
+            li.slgt display {
+                color: rgb(254, 255, 8);
+            }
+            li.mrgl display {
+                color: rgb(21, 165, 63);
+            }
+            li.no display {
+                color: rgb(181, 230, 180);
+            }
+            li.hide {
+                display: none !important;
+            }
+            footer {
+                position: absolute;
+                bottom: 0px;
+                height: 48px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: rgb(38, 38, 38);
+                color: rgb(225, 225, 225);
+            }
+            #clockAndAlert {
+                display: flex;
+            }
+            #clock {
+                margin-right: 16px;
+            }
+            #menu {
+                margin-left: 16px;
+                display: flex;
+            }
+            #menu > div {
+                cursor: pointer;
+                margin-right: 24px;
+            }
+            #gpsToggle {
+                display: flex;
+                width: 100px;
+            }
+            #gps > .icon {
+                margin-right: 8px;
+            }
+            #coords {
+                font-size: 14px;
+                line-height: 24px;
+                white-space: nowrap;
+            }
+            .icon {
+                max-width: 24px;
+                height: 24px;
+                margin-right: 8px;
+            }
+            #clockAndAlert .icon {
+                filter: invert(100%) sepia(33%) saturate(4838%) hue-rotate(1deg) brightness(106%) contrast(109%);
+            }
+            .on .icon {
+                filter: invert(99%) sepia(3%) saturate(212%) hue-rotate(233deg) brightness(114%) contrast(76%);
+            }
+            .on {
+                color: rgb(225, 225, 225);
+            }
+            .off .icon {
+                filter: invert(41%) sepia(9%) saturate(271%) hue-rotate(164deg) brightness(94%) contrast(88%);
+            }
+            .off {
+                color: rgb(100, 105, 109);
+            }
+            type {
+                width: 92px;
+            }
+            type > a {
+                color:rgb(225, 225, 225) !important;
+            }
+            ago {
+                width: 48px;
+                margin-left: 8px;
+            }
+            display {
+                width: 100%;
+                display: grid;
+            }
+            display > img {
+                margin-top: 16px;
+                max-height: 256px;
+            }
+        </style>
+    </head>
+    <body>
+        <section id="intro">sware should not be used while driving and should not be relied upon to provide user safety - tap to accept</section>
+        <section id="config"></section>
+        <ol id="content"></ol>
+        <footer>
+            <div id="menu">
+                <div id="chaseModeToggle">
+                    <img class="icon" src="storm.svg" />
+                </div>
+                <div id="audioToggle">
+                    <img class="icon" src="sound.svg" />
+                </div>
+                <div id="gpsToggle">
+                    <img class="icon" src="gps.svg" />
+                    <div id="coords">Awaiting GPS...</div>
+                </div>
+            </div>
+            <div id="clockAndAlert">
+                <img class="icon" style="display:none;" src="alert.svg" />
+                <div id="clock"></div>
+            </div>
+        </footer>
+        <script>
+            // Regexes
+            const TIME_REGEX = /\d{4}Z/g;
+
+            // Audio
+            const eas = new Audio('eas-short.mp3');
+            const twang = new Audio('twang.wav');
+            const click = new Audio('click.mp3');
+            const epic = new Audio('epic.wav');
+
+            // Elements
+            const contentElement = document.getElementById('content');
+            const introElement = document.getElementById('intro');
+            const gpsButton = document.getElementById('gpsToggle');
+            const gpsCoordsElement = document.getElementById('coords');
+            const chaseModeButton = document.getElementById('chaseModeToggle');
+            const audioButton = document.getElementById('audioToggle');
+            const alertIcon = document.getElementById('alertIcon');
+            const clockElement = document.getElementById('clock');
+
+            const apiUrl = 'http://localhost:8080/events'
+            const ended = new CustomEvent('ended');
+
+            let config = {};
+            let offset = -1;
+            let audioReady = true;
+            let gpsLocation = undefined;
+
+            function saveConfig() {
+                const value = JSON.stringify(config);
+                localStorage.setItem('config', value);
+            }
+
+            function loadConfig() {
+                const storedConfig = localStorage.getItem('config');
+                if (storedConfig) {
+                    const parsedConfig = JSON.parse(storedConfig);
+                    console.log('Loading stored config', parsedConfig)
+                    config = parsedConfig;
+                } else {
+                    config = {
+                        audioEnabled: false,
+                        chaseMode: false,
+                        debugMode: false,
+                        expirationMinutes: 60,
+                        hailSizeThreshold: 1.75,
+                        gpsEnabled: false,
+                        maxDistance: 140,   // Miles
+                    }
+                    console.log('Using default config', config);
+                }
+            }
+
+            function getDistance(lat1, lon1, lat2, lon2) {
+                const toRadian = angle => (Math.PI / 180) * angle;
+                const distance = (a, b) => (Math.PI / 180) * (a - b);
+                const RADIUS_OF_EARTH_IN_MILES = 3959.87433;
+                const dLat = distance(lat2, lat1);
+                const dLon = distance(lon2, lon1);
+
+                lat1 = toRadian(lat1);
+                lat2 = toRadian(lat2);
+
+                const a =
+                    Math.pow(Math.sin(dLat / 2), 2) +
+                    Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+                const c = 2 * Math.asin(Math.sqrt(a));
+
+                return Math.round(RADIUS_OF_EARTH_IN_MILES * c);
+            };
+
+            function replaceAllState(text) {
+                text = text.replace(/Alabama/gi, 'AL');
+                text = text.replace(/Alaska/gi, 'AK');
+                text = text.replace(/Arizona/gi, 'AZ');
+                text = text.replace(/Arkansas/gi, 'AR');
+                text = text.replace(/California/gi, 'CA');
+                text = text.replace(/Colorado/gi, 'CO');
+                text = text.replace(/Connecticut/gi, 'CT');
+                text = text.replace(/Delaware/gi, 'DE');
+                text = text.replace(/Florida/gi, 'FL');
+                text = text.replace(/Georgia/gi, 'GA');
+                text = text.replace(/Hawaii/gi, 'HI');
+                text = text.replace(/Idaho/gi, 'ID');
+                text = text.replace(/Illinois/gi, 'IL');
+                text = text.replace(/Indiana/gi, 'IN');
+                text = text.replace(/Iowa/gi, 'IA');
+                text = text.replace(/Kansas/gi, 'KS');
+                text = text.replace(/Kentucky/gi, 'KY');
+                text = text.replace(/Louisiana/gi, 'LA');
+                text = text.replace(/Maine/gi, 'ME');
+                text = text.replace(/Maryland/gi, 'MD');
+                text = text.replace(/Massachusetts/gi, 'MA');
+                text = text.replace(/Michigan/gi, 'MI');
+                text = text.replace(/Minnesota/gi, 'MN');
+                text = text.replace(/Mississippi/gi, 'MS');
+                text = text.replace(/Missouri/gi, 'MO');
+                text = text.replace(/Montana/gi, 'MT');
+                text = text.replace(/Nebraska/gi, 'NE');
+                text = text.replace(/Nevada/gi, 'NV');
+                text = text.replace(/New Hampshire/gi, 'NH');
+                text = text.replace(/New Jersey/gi, 'NJ');
+                text = text.replace(/New Mexico/gi, 'NM');
+                text = text.replace(/New York/gi, 'NY');
+                text = text.replace(/North Carolina/gi, 'NC');
+                text = text.replace(/North Dakota/gi, 'ND');
+                text = text.replace(/Ohio/gi, 'OH');
+                text = text.replace(/Oklahoma/gi, 'OK');
+                text = text.replace(/Oregon/gi, 'OR');
+                text = text.replace(/Pennsylvania/gi, 'PA');
+                text = text.replace(/Rhode Island/gi, 'RI');
+                text = text.replace(/South Carolina/gi, 'SC');
+                text = text.replace(/South Dakota/gi, 'SD');
+                text = text.replace(/Tennessee/gi, 'TN');
+                text = text.replace(/Texas/gi, 'TX');
+                text = text.replace(/Utah/gi, 'UT');
+                text = text.replace(/Vermont/gi, 'VT');
+                text = text.replace(/Virginia/gi, 'VA');
+                text = text.replace(/Washington/gi, 'WA');
+                text = text.replace(/West Virginia/gi, 'WV');
+                text = text.replace(/Wisconsin/gi, 'WI');
+                text = text.replace(/Wyoming/gi, 'WY');
+                return text;
+            }
+
+            function replaceAllSt(text) {
+                text = text.replace('AL', 'Alabama');
+                text = text.replace('AK', 'Alaska');
+                text = text.replace('AZ', 'Arizona');
+                text = text.replace('AR', 'Arkansas');
+                text = text.replace('CA', 'California');
+                text = text.replace('CO', 'Colorado');
+                text = text.replace('CT', 'Connecticut');
+                text = text.replace('DE', 'Delaware');
+                text = text.replace('FL', 'Florida');
+                text = text.replace('GA', 'Georgia');
+                text = text.replace('HI', 'Hawaii');
+                text = text.replace('ID', 'Idaho');
+                text = text.replace('IL', 'Illinois');
+                text = text.replace('IN', 'Indiana');
+                text = text.replace('IA', 'Iowa');
+                text = text.replace('KS', 'Kansas');
+                text = text.replace('KY', 'Kentucky');
+                text = text.replace('LA', 'Louisiana');
+                text = text.replace('ME', 'Maine');
+                text = text.replace('MD', 'Maryland');
+                text = text.replace('MA', 'Massachusetts');
+                text = text.replace('MI', 'Michigan');
+                text = text.replace('MN', 'Minnesota');
+                text = text.replace('MS', 'Mississippi');
+                text = text.replace('MO', 'Missouri');
+                text = text.replace('MT', 'Montana');
+                text = text.replace('NE', 'Nebraska');
+                text = text.replace('NV', 'Nevada');
+                text = text.replace('NH', 'New Hampshire');
+                text = text.replace('NJ', 'New Jersey');
+                text = text.replace('NM', 'New Mexico');
+                text = text.replace('NY', 'New York');
+                text = text.replace('NC', 'North Carolina');
+                text = text.replace('ND', 'North Dakota');
+                text = text.replace('OH', 'Ohio');
+                text = text.replace('OK', 'Oklahoma');
+                text = text.replace('OR', 'Oregon');
+                text = text.replace('PA', 'Pennsylvania');
+                text = text.replace('RI', 'Rhode Island');
+                text = text.replace('SC', 'South Carolina');
+                text = text.replace('SD', 'South Dakota');
+                text = text.replace('TN', 'Tennessee');
+                text = text.replace('TX', 'Texas');
+                text = text.replace('UT', 'Utah');
+                text = text.replace('VT', 'Vermont');
+                text = text.replace('VA', 'Virginia');
+                text = text.replace('WA', 'Washington');
+                text = text.replace('WV', 'West Virginia');
+                text = text.replace('WI', 'Wisconsin');
+                text = text.replace('WY', 'Wyoming');
+                return text;
+            }
+
+            function stToState(st) {
+                switch(st) {
+                    case 'AL':
+                        return 'Alabama';
+                        break;
+                    case 'AK':
+                            return 'Alaska';
+                            break;
+                    case 'AZ':
+                            return 'Arizona';
+                            break;
+                    case 'AR':
+                            return 'Arkansas';
+                            break;
+                    case 'CA':
+                            return 'California';
+                            break;
+                    case 'CO':
+                            return 'Colorado';
+                            break;
+                    case 'CT':
+                            return 'Connecticut';
+                            break;
+                    case 'DE':
+                            return 'Delaware';
+                            break;
+                    case 'FL':
+                            return 'Florida';
+                            break;
+                    case 'GA':
+                            return 'Georgia';
+                            break;
+                    case 'HI':
+                            return 'Hawaii';
+                            break;
+                    case 'ID':
+                            return 'Idaho';
+                            break;
+                    case 'IL':
+                            return 'Illinois';
+                            break;
+                    case 'IN':
+                            return 'Indiana';
+                            break;
+                    case 'IA':
+                            return 'Iowa';
+                            break;
+                    case 'KS':
+                            return 'Kansas';
+                            break;
+                    case 'KY':
+                            return 'Kentucky';
+                            break;
+                    case 'LA':
+                            return 'Louisiana';
+                            break;
+                    case 'ME':
+                            return 'Maine';
+                            break;
+                    case 'MD':
+                            return 'Maryland';
+                            break;
+                    case 'MA':
+                            return 'Massachusetts';
+                            break;
+                    case 'MI':
+                            return 'Michigan';
+                            break;
+                    case 'MN':
+                            return 'Minnesota';
+                            break;
+                    case 'MS':
+                            return 'Mississippi';
+                            break;
+                    case 'MO':
+                            return 'Missouri';
+                            break;
+                    case 'MT':
+                            return 'Montana';
+                            break;
+                    case 'NE':
+                            return 'Nebraska';
+                            break;
+                    case 'NV':
+                            return 'Nevada';
+                            break;
+                    case 'NH':
+                            return 'New Hampshire';
+                            break;
+                    case 'NJ':
+                            return 'New Jersey';
+                            break;
+                    case 'NM':
+                            return 'New Mexico';
+                            break;
+                    case 'NY':
+                            return 'New York';
+                            break;
+                    case 'NC':
+                            return 'North Carolina';
+                            break;
+                    case 'ND':
+                            return 'North Dakota';
+                            break;
+                    case 'OH':
+                            return 'Ohio';
+                            break;
+                    case 'OK':
+                            return 'Oklahoma';
+                            break;
+                    case 'OR':
+                            return 'Oregon';
+                            break;
+                    case 'PA':
+                            return 'Pennsylvania';
+                            break;
+                    case 'RI':
+                            return 'Rhode Island';
+                            break;
+                    case 'SC':
+                            return 'South Carolina';
+                            break;
+                    case 'SD':
+                            return 'South Dakota';
+                            break;
+                    case 'TN':
+                            return 'Tennessee';
+                            break;
+                    case 'TX':
+                            return 'Texas';
+                            break;
+                    case 'UT':
+                            return 'Utah';
+                            break;
+                    case 'VT':
+                            return 'Vermont';
+                            break;
+                    case 'VA':
+                            return 'Virginia';
+                            break;
+                    case 'WA':
+                            return 'Washington';
+                            break;
+                    case 'WV':
+                            return 'West Virginia';
+                            break;
+                    case 'WI':
+                            return 'Wisconsin';
+                            break;
+                    case 'WY':
+                            return 'Wyoming';
+                            break;
+                    default:
+                        console.error(`Unknown state: ${st}`);
+                        return ''
+                }
+            }
+
+            function getFullBearing(bearing) {
+                switch(bearing) {
+                    case 'N':
+                        return 'north';
+                        break;
+                    case 'NE':
+                        return 'northeast';
+                        break;
+                    case 'E':
+                        return 'east';
+                        break;
+                    case 'SE':
+                        return 'southeast';
+                        break;
+                    case 'S':
+                        return 'south';
+                        break;
+                    case 'SW':
+                        return 'southwest';
+                        break;
+                    case 'W':
+                        return 'west';
+                        break;
+                    case 'NW':
+                        return 'northwest';
+                        break;
+                    default:
+                        return 'unknown direction';
+                }
+            }
+
+            function padZero(num) {
+                return num < 10 ? `0${num}` : `${num}`;
+            }
+
+            function tsToTime(ts) {
+                const date = new Date(ts);
+                return `${padZero(date.getUTCHours())}${padZero(date.getUTCMinutes())}Z`;
+            }
+
+            function updateClock() {
+                const ts = new Date().getTime();
+                const time = tsToTime(ts);
+                clockElement.innerText = time;
+            }
+
+            function updateLocation() {
+                if (config.gpsEnabled) {
+                    console.info('Polling for GPS')
+                    if (gpsCoordsElement.innerText === 'OFF') {
+                        gpsCoordsElement.innerText = 'Pending...';
+                    }
+                    navigator.geolocation.getCurrentPosition((location) => {
+                        gpsLocation = [location.coords.longitude.toFixed(4), location.coords.latitude.toFixed(4)];
+                        gpsCoordsElement.innerText = `${location.coords.longitude.toFixed(4)} ${location.coords.latitude.toFixed(4)}`;
+                        updateEvents();
+                    });
+                } else {
+                    gpsLocation = [];
+                    gpsCoordsElement.innerText = 'OFF';
+                    updateEvents();
+                }
+            }
+
+            function getListClass(event) {
+                if (event.type === 'swo') {
+                    if (event.subject.indexOf('HIGH RISK') > -1) {
+                        return 'high';
+                    } else if (event.subject.indexOf('MODERATE RISK') > -1) {
+                        return 'mod';
+                    } else if (event.subject.indexOf('ENHANCED RISK') > -1) {
+                        return 'enh';
+                    } else if (event.subject.indexOf('SLIGHT RISK') > -1) {
+                        return 'slgt';
+                    } else if (event.subject.indexOf('MARGINAL RISK') > -1) {
+                        return 'mrgl'
+                    } else {
+                        return 'no';
+                    }
+                } else if (event.type === 'tor' && event.emergency) {
+                    return 'emergency';
+                } else if (event.type === 'svs' && event.emergency) {
+                    return 'emergency';
+                } else if (event.type === 'sel') {
+                    if (event.pds) {
+                        return 'pds';
+                    } else if (event.subject.indexOf('Tornado') > -1) {
+                        return 'tor';
+                    } else if (event.subject.indexOf('Severe Thunderstorm') > -1) {
+                        return 'svr';
+                    }
+                }
+
+                return '';
+            }
+
+            function getDistanceDetails(point) {
+                let text = '';
+                let shouldHide = false;
+                let distance = 0;
+                if (gpsLocation && gpsLocation.length && point) {
+                    const distance = getDistance(gpsLocation[1], gpsLocation[0], point[1], point[0]);
+                    text = `(${distance}mi)`;
+                    shouldHide = config.chaseMode && (distance > config.maxDistance);
+                }
+                return {distance, text, shouldHide};
+            }
+
+            function renderEvent(event, now) {
+                const imgHtml = event.img_url ? `<img src="${event.img_url}" />` : '';
+                const pointHtml = (event.geo && event.geo.point) ? `geo="${event.geo.point}"` : '';
+                const type = event.type.toUpperCase();
+                const typeHtml = event.url ? `<type><a href="${event.url}" target="_blank">${type}</a></type>` : `<type>${type}</type>`;
+                const point = (event.geo && event.geo.point) ? event.geo.point : undefined;
+                const distanceDetails = getDistanceDetails(point);
+                const isSmallHail = event.report && event.report.hazard === 'HAIL' && event.report.mag < config.hailSizeThreshold && config.chaseMode;
+                const smallHailHtml = 'sh="true"';
+                const shouldHideSmallHail = isSmallHail && config.chaseMode;
+                const filtered = distanceDetails.shouldHide || shouldHideSmallHail;
+                let listClass = getListClass(event);
+
+                if (filtered) {
+                    listClass += ' hide';
+                }
+
+                const html = `<li class="${listClass}" ts="${event.ts}" ${smallHailHtml}${pointHtml}>${typeHtml}<display>${event.display}<span class="distance">${distanceDetails.text}</span>${imgHtml}</display><ago>${getTimeAgo(now, event.ts)}</ago></li>`;
+                contentElement.innerHTML = html + contentElement.innerHTML;
+                
+                return filtered
+            }
+
+            function processEvents(newEvents) {
+                if (!newEvents.length) return;
+                
+                const now = Date.now();
+                const lastEventId = newEvents[newEvents.length - 1].id;
+
+                processEvent(newEvents[0], now, lastEventId).then(() => {
+                    const next = newEvents.slice(1);
+
+                    if (next.length) {
+                        setTimeout(() => processEvents(next), 1000);
+                    }
+                });
+            }
+
+            function textToUtterance(text) {
+                return  text.replace(TIME_REGEX, (match) => `${match.slice(0, 2)} ${match.slice(2)}`);
+            }
+
+            function setDisplayAndUtterance(event) {
+                switch (event.type) {
+                    case 'md':
+                        const displaySubject2 = replaceAllState(event.subject2).replace('Parts', 'parts');
+                        const utterSubject2 = replaceAllSt(event.subject2);
+                        event.display = `MD ${event.source_id}: ${event.subject}, for ${displaySubject2}`
+                        event.utterance = `The SPC has issued MD ${event.source_id}: ${event.subject}, for ${utterSubject2}`
+                        break;
+                    case 'swo':
+                        event.display = `Day 1 Convective Outlook: ${replaceAllState(event.subject)}`
+                        event.utterance = `The SPC has issued a New Day 1 Convective Outlook: ${event.subject}`;
+                        break;
+                    case 'lsr':
+                        const time = tsToTime(event.report.ts);    
+                        let mag = '';
+                        let hazard = event.report.hazard;
+
+                        if (event.report.hazard === 'HAIL') {
+                            mag = `${event.report.mag}" `;
+                        } else {
+                            hazard = `a ${hazard}`;
+                        }
+                        
+                        event.display = `At ${time}, ${mag}${hazard} was reported near ${event.geo.city}, ${event.geo.st}`
+                        event.utterance = `At ${time.slice(0, 2)} ${time.slice(2)}, ${mag}${hazard} was reported near ${event.geo.city}, ${stToState(event.geo.st)}`;
+                        break;
+                    case 'tor':
+                        let eventLocation = '';
+                        if (event.geo.distance <= 1) {
+                            eventLocation = `near ${event.geo.city}, ${event.geo.st}`;
+                        } else {
+                            eventLocation = `${event.geo.distance} miles ${event.geo.bearing} of ${event.geo.city}, ${event.geo.st}`;
+                        }
+                        event.display = `${event.wfo} has issued a tornado warning for a storm located ${eventLocation}`;
+                        event.utterance = event.display.replace(event.geo.st, stToState(event.geo.st));
+                        event.utterance = event.utterance.replace(`miles ${event.geo.bearing}`, `miles ${getFullBearing(event.geo.bearing)}`);
+                        if (event.emergency) {
+                            event.display += `. ${event.subject2}.`
+                            event.utterance += `. ${event.subject2}.`
+                        }
+                        break;
+                    case 'sel':
+                        const pds = event.pds ? 'PDS ' : '';
+                        const selSubject = `${pds}${event.subject}`;
+                        event.display = replaceAllState(selSubject);
+                        event.utterance = `The SPC has issued ${selSubject}`;
+                        break;
+                    case 'sn':
+                        const snTime = tsToTime(event.report.ts);    
+                        let snMag = '';
+                        let snHazard = event.report.hazard.toUpperCase();
+
+                        if (snHazard === 'HAIL') {
+                            snMag = `${event.report.mag}" `;
+                        }
+                        
+                        if (['HAIL', 'FLOODING', 'HIGH WIND', 'OTHER'].indexOf(snHazard) === -1) {
+                            snHazard = `a ${snHazard}`;
+                        }
+                        
+                        event.display = `At ${snTime}, ${snMag}${snHazard} was reported near ${event.geo.city}, ${event.geo.st}`
+                        event.utterance = `At ${snTime.slice(0, 2)} ${snTime.slice(2)}, ${snMag}${snHazard} was reported near ${event.geo.city}, ${stToState(event.geo.st)}`;
+                        break;
+                        break;
+                    case 'svr':
+                        let svrEventLocation = '';
+                        if (event.geo.distance <= 1) {
+                            svrEventLocation = `near ${event.geo.city}, ${event.geo.st}`;
+                        } else {
+                            svrEventLocation = `${event.geo.distance} miles ${event.geo.bearing} of ${event.geo.city}, ${event.geo.st}`;
+                        }
+                        event.display = `${event.wfo} has issued a severe thunderstorm warning for a storm located ${svrEventLocation}`;
+                        event.utterance = event.display.replace(event.geo.st, stToState(event.geo.st));
+                        event.utterance = event.utterance.replace(`miles ${event.geo.bearing}`, `miles ${getFullBearing(event.geo.bearing)}`);
+                        break;
+                    case 'svs':
+                        event.display = `${event.subject}. ${event.subject2}.`;
+                        event.utterance = `${event.subject}. ${event.subject2}.`;
+                        break;
+                    case 'diag':
+                        event.display = event.subject;
+                        break;
+                }
+                return event;
+            }
+
+            function processEvent(event, now, lastEventId) {
+                event = setDisplayAndUtterance(event);
+                // Local diag events don't have an ID and shouldn't change tracked offsets
+                if (event.id !== undefined) {
+                    offset = event.id;
+                }
+
+                const filtered = renderEvent(event, now);
+
+                return new Promise((resolve, reject) => {
+                    if (!filtered && config.audioEnabled && audioReady && event.type !== 'diag') {
+                        const utteranceText = textToUtterance(event.utterance);
+                        const utterance = new SpeechSynthesisUtterance(utteranceText);
+                        const isHighRisk = event.subject.indexOf('HIGH RISK') > -1;
+                        const isEpic = event.pds || event.emergency || (event.type === 'swo' && isHighRisk);
+
+                        epic.onended = () => {
+                            if (['sel', 'md'].indexOf(event.type) > -1) {
+                                eas.onended = () => {
+                                    speechSynthesis.speak(utterance);
+                                    utterance.onend = () => resolve();
+                                };
+
+                                eas.play()
+                            } else if (event.type === 'swo' && !isEpic) {
+                                twang.onended = () => {
+                                    speechSynthesis.speak(utterance);
+                                    utterance.onend = () => resolve();
+                                };
+
+                                twang.play()
+                            } else {
+                                speechSynthesis.speak(utterance);
+                                utterance.onend = () => resolve();
+                            }
+                        };
+
+                        if (isEpic) {
+                            epic.play();
+                        } else {
+                            epic.dispatchEvent(ended);
+                        }
+                    } else {
+                        // Only play audio after first full load of events
+                        if (!audioReady && event.id === lastEventId) {
+                            audioReady = true;
+                        }
+                        
+                        resolve();
+                    }
+                });
+            }
+
+            function updateEvents() {
+                const now = Date.now();
+
+                Array.from(contentElement.childNodes).forEach(child => {
+                    // Calculate new "ago"
+                    const sourceTs = parseInt(child.getAttribute('ts'));
+                    const newAgoMinutes = now - sourceTs / 60000;
+
+                    // Remove expired events
+                    if (newAgoMinutes > config.expirationMinutes && !config.debugMode) {
+                        contentElement.removeChild(child);
+                    }
+
+                    // Update "ago"
+                    const agoElement = child.getElementsByTagName('ago')[0];
+                    agoElement.innerText = getTimeAgo(now, sourceTs);
+
+                    // Update hail filter
+                    let smallHailHidden = child.getAttribute('sm') !== null && config.chaseMode;
+
+                    // Update distance
+                    let distanceHidden = false;
+                    const geo = child.getAttribute('geo');
+                    if (geo) {
+                        let sourcePoint = geo.split(',');
+                        sourcePoint = [parseFloat(sourcePoint[0]), parseFloat(sourcePoint[1])];
+                        const distanceDetails = getDistanceDetails(sourcePoint);
+                        child.getElementsByClassName('distance')[0].innerText = distanceDetails.text;
+                        distanceHidden = distanceDetails.shouldHide;
+                    }
+
+                    // Hide filtered results
+                    if (smallHailHidden || distanceHidden) {
+                        child.classList.add('hide');
+                    } else {
+                        child.classList.remove('hide');
+                    }
+                });
+            }
+
+            function getEvents() {
+                console.info(`Polling for events, offset: ${offset}`);
+                const url = `${apiUrl}/${offset}`;
+
+                fetch(url)
+                    .then((resp) => resp.json())
+                    .then((json) => {
+                        console.log(`Found ${json.data.length} events`);
+                        processEvents(json.data);
+                    })
+                    .catch((resp) => {
+                        console.error(resp);
+                        const events = [{
+                            subject: 'Unable to reach API - no data available',
+                            ts: Date.now(),
+                            type: 'diag',
+                        }];
+                        processEvents(events);
+                    });
+            }
+
+            function getTimeAgo(now, sourceTs) {
+                const deltaMillis = now - sourceTs;
+
+                if (deltaMillis < 60000) {
+                    return '<1m';
+                } else if (deltaMillis < 3600000) {
+                    return `${Math.trunc(deltaMillis / 60000)}m`;
+                } else {
+                    return `${Math.trunc(deltaMillis / 3600000)}h`;
+                }
+            }
+
+            chaseModeButton.onclick = () => {
+                click.play();
+                config.chaseMode = !config.chaseMode;
+                if (config.chaseMode) {
+                    chaseModeButton.classList.remove('off');
+                    chaseModeButton.classList.add('on');
+                } else {
+                    chaseModeButton.classList.remove('on');
+                    chaseModeButton.classList.add('off');
+                }
+                updateEvents();
+                saveConfig();
+            };
+
+            audioButton.onclick = () => {
+                click.play();
+                config.audioEnabled = !config.audioEnabled;
+                if (config.audioEnabled) {
+                    audioButton.classList.remove('off');
+                    audioButton.classList.add('on');
+                } else {
+                    audioButton.classList.remove('on');
+                    audioButton.classList.add('off');
+                }
+                saveConfig();
+            };
+
+            gpsButton.onclick = () => {
+                click.play();
+                config.gpsEnabled = !config.gpsEnabled;
+                if (config.gpsEnabled) {
+                    gpsButton.classList.remove('off');
+                    gpsButton.classList.add('on');
+                } else {
+                    gpsButton.classList.remove('on');
+                    gpsButton.classList.add('off');
+                }
+                updateLocation();
+                saveConfig();
+            }
+
+            // Legalese/autoplay
+            introElement.onclick = (e) => {
+                e.target.style.display = 'none';
+                loadConfig();
+
+                // Set initial classes for menu after loading config
+                chaseModeButton.classList.add(config.chaseMode ? 'on' : 'off');
+                audioButton.classList.add(config.audioEnabled ? 'on' : 'off');
+                gpsButton.classList.add(config.gpsEnabled ? 'on' : 'off');
+            
+                // Update clock
+                updateClock();
+                setInterval(updateClock, 1000);
+
+                // Update location
+                updateLocation();
+                setInterval(updateLocation, 30000);
+
+                // Poll for events
+                getEvents();
+                setInterval(getEvents, 30000);
+
+                // Update events
+                updateEvents();
+                setInterval(updateEvents, 30000);
+            };
+        </script>
+    </body>
+</html>

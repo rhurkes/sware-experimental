@@ -1,0 +1,9 @@
+Refresh: 1
+Threshold: 999
+Title: Spotter Network (96dpi) - Reports Only
+Font: 1, 11, 0, "Courier New"
+IconFile: 3, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+IconFile: 4, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+IconFile: 5, 30, 30, 15, 15, "https://www.spotternetwork.org/iconsheets/SN_Reports_096.png"
+
+Icon: 33.568401,-101.877800,000,3,2,"Reported By: Johnathan Theriac\nFunnel Cloud\nTime: 2022-03-21 19:27:22 UTC\nNotes: NONE"
